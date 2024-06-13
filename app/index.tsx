@@ -1,26 +1,18 @@
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { Link } from "expo-router";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>First step toward Kitty Central!</Text>
-      <StatusBar />
-      <Link href="/kitty" style={{ color: "blue" }}>
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-3xl">First step toward Kitty Central!</Text>
+      <StatusBar style="auto" />
+      <Link href="/kitty" className="text-blue-600">
         Let's go see kitties!
       </Link>
-      <Link href="/kittyGif" style={{ color: "green" }}>
+      <Link href="/kittyGif" className="text-green-600">
         Or we can see gifs of kitties!
       </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
