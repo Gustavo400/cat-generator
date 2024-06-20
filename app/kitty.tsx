@@ -1,13 +1,14 @@
 import {
   ActivityIndicator,
-  FlatList,
+  Image,
+  ImageSourcePropType,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
-type Image = {
+type CatResponse = {
   id: string;
   url: string;
   width: number;
@@ -16,19 +17,16 @@ type Image = {
 
 const kitty = () => {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<Image[]>([]); //DONT FORGET TO FIX
+  const [imageSourceURL, setImageSourceURL] = useState<string>("");
 
-  //Fetching single cat image from api and controlling loading state
   const getCatPic = async () => {
     try {
-      const response = await fetch(
-        "https://api.thecatapi.com/v1/images/search"
-      );
-      console.log("json data");
-      console.log(response);
-      const blob = await response.blob();
-      console.log("blob data");
-      console.log(blob);
+      const response = await fetch("https://api.thecatapi.com/v1/images/search")
+        .then((response) => response.json())
+        .then((result: CatResponse[]) => {
+          setImageSourceURL(result[0].url);
+          console.log(imageSourceURL);
+        });
     } catch (error) {
       console.error();
     } finally {
@@ -38,22 +36,16 @@ const kitty = () => {
 
   useEffect(() => {
     getCatPic();
-  }, []);
+  }, [isLoading]);
 
   return (
     <View style={styles.container}>
-      <View>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            data={data}
-            keyExtractor={({ id }) => id}
-            renderItem={({ item }) => <Text>idk</Text>}
-          />
-        )}
-      </View>
-      <Text>Kitties will go here!</Text>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Image style={styles.image} source={{ uri: imageSourceURL }} />
+      )}
+      <Text style={styles.text}>This is where kitties will go!</Text>
     </View>
   );
 };
@@ -66,5 +58,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  image: {
+    flex: 1,
+    width: 500,
+    height: 500,
+  },
+  text: {
+    flex: 1,
   },
 });
