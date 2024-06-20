@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Button,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -19,13 +20,13 @@ const kitty = () => {
   const [isLoading, setLoading] = useState(true);
   const [imageSourceURL, setImageSourceURL] = useState<string>("");
 
+  //Fetches cat image from API and extracts the URL
   const getCatPic = async () => {
     try {
       const response = await fetch("https://api.thecatapi.com/v1/images/search")
         .then((response) => response.json())
         .then((result: CatResponse[]) => {
           setImageSourceURL(result[0].url);
-          console.log(imageSourceURL);
         });
     } catch (error) {
       console.error();
@@ -34,6 +35,7 @@ const kitty = () => {
     }
   };
 
+  //Awaits getCatPic as long as it is still loading the picture
   useEffect(() => {
     getCatPic();
   }, [isLoading]);
@@ -45,7 +47,14 @@ const kitty = () => {
       ) : (
         <Image style={styles.image} source={{ uri: imageSourceURL }} />
       )}
-      <Text style={styles.text}>This is where kitties will go!</Text>
+      <View style={styles.button}>
+        <Button
+          onPress={getCatPic}
+          title="Tap for a new feline friend!"
+          color="#FFBB00"
+          accessibilityLabel="Refresh button"
+        ></Button>
+      </View>
     </View>
   );
 };
@@ -61,10 +70,11 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 500,
-    height: 500,
+    width: "90%",
+    height: "50%",
+    marginVertical: 25,
   },
-  text: {
+  button: {
     flex: 1,
   },
 });
