@@ -2,12 +2,13 @@ import {
   ActivityIndicator,
   Button,
   Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
+  Pressable,
   View,
+  Text,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import styles from "./styling";
 
 type CatResponse = {
   id: string;
@@ -19,14 +20,18 @@ type CatResponse = {
 const kitty = () => {
   const [isLoading, setLoading] = useState(true);
   const [imageSourceURL, setImageSourceURL] = useState<string>("");
+  const [secondImageSourceURL, setSecondImageSourceURL] = useState<string>("");
 
   //Fetches cat image from API and extracts the URL
   const getCatPic = async () => {
     try {
-      const response = await fetch("https://api.thecatapi.com/v1/images/search")
+      const response = await fetch(
+        "https://api.thecatapi.com/v1/images/search?limit=10"
+      )
         .then((response) => response.json())
         .then((result: CatResponse[]) => {
           setImageSourceURL(result[0].url);
+          setSecondImageSourceURL(result[1].url);
         });
     } catch (error) {
       console.error();
@@ -47,34 +52,18 @@ const kitty = () => {
       ) : (
         <Image style={styles.image} source={{ uri: imageSourceURL }} />
       )}
-      <View style={styles.button}>
-        <Button
-          onPress={getCatPic}
-          title="Tap for a new feline friend!"
-          color="#FFBB00"
-          accessibilityLabel="Refresh button"
-        ></Button>
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Image style={styles.image} source={{ uri: secondImageSourceURL }} />
+      )}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={getCatPic}>
+          <Text>Tap here for another dose of cuteness!</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 export default kitty;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    flex: 1,
-    width: "90%",
-    height: "50%",
-    marginVertical: 25,
-  },
-  button: {
-    flex: 1,
-  },
-});
