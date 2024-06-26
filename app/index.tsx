@@ -2,8 +2,13 @@ import { Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Link } from "expo-router";
 import styles from "./styling";
+import { useFonts } from "expo-font";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "IrishGrover-Regular": require("../assets/fonts/IrishGrover-Regular.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.textBox}>
@@ -20,7 +25,7 @@ export default function App() {
       </View>
       <StatusBar style="auto" />
       <Link href="/kitty" style={styles.button}>
-        Let's go see kitties!
+        Let's go see some Kitties!
       </Link>
     </View>
   );

@@ -59,7 +59,9 @@ const kitty = () => {
       )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={getCatPic}>
-          <Text>Tap here for another dose of cuteness!</Text>
+          <Text style={styles.text}>
+            Tap here for another dose of cuteness!
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

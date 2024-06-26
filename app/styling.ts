@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.textGrey,
+    fontFamily: "IrishGrover-Regular",
   },
   textBox: {
     padding: 15,
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     flex: 0.3,
   },
   button: {
+    fontFamily: "IrishGrover-Regular",
     padding: 10,
     borderRadius: 5,
     backgroundColor: COLORS.buttonsYellow,
