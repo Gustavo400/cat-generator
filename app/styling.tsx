@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  text: {
+    color: COLORS.textGrey,
+  },
+  textBox: {
+    padding: 15,
+    backgroundColor: COLORS.textBoxesGreen,
+    marginBottom: 25,
+    marginHorizontal: 25,
+  },
   image: {
     flex: 1,
     width: "90%",
