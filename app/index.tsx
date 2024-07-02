@@ -1,10 +1,12 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Link } from "expo-router";
 import styles from "./styling";
 import { useFonts } from "expo-font";
+import Logo from "@/assets/images/Logo";
 
 export default function App() {
+  //Loading the font for the app here
   const [fontsLoaded] = useFonts({
     "IrishGrover-Regular": require("../assets/fonts/IrishGrover-Regular.ttf"),
   });
@@ -12,7 +14,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.textBox}>
-        <Text>This is where the Logo will go</Text>
+        <Logo width={320} height={320}></Logo>
       </View>
       <View style={styles.textBox}>
         <Text style={styles.text}>
@@ -24,8 +26,10 @@ export default function App() {
         </Text>
       </View>
       <StatusBar style="auto" />
-      <Link href="/kitty" style={styles.button}>
-        Let's go see some Kitties!
+      <Link href="/kitty" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.text}>Let's go see some kitties!</Text>
+        </TouchableOpacity>
       </Link>
     </View>
   );
